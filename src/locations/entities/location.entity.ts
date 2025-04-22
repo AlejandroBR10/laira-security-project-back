@@ -1,21 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { copyFile } from "fs";
-import { Employee } from "src/employees/entities/employee.entity";
-import { Manager } from "src/managers/entities/manager.entity";
-import { Region } from "src/regions/entities/region.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Customer } from "src/customers/entities/customer.entity";
+import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne, OneToMany, Entity } from "typeorm";
 
 @Entity()
 export class Location {
     @PrimaryGeneratedColumn('increment')
     locationId : number;
     @ApiProperty({
-        default: "Ocso Juriquilla"
+        default: "Queretaro"
     })
     @Column('text')
     locationName : string;
     @ApiProperty({
-        default: "Avenida Tal, S/N 76220"
+        default: "Avenida de la Luz, S/N 76233"
     })
     @Column('text')
     locationAddress : string;
@@ -25,21 +22,7 @@ export class Location {
     @Column('simple-array')
     locationLatLng : number[];
 
-    @ApiProperty({default: "1b1434ad-5e6c-4ee3-806d-74406d65c714"})
-    @OneToOne(() => Manager, {
-        eager: true,
-    })
-    @JoinColumn({
-        name: 'managerId',
-    })
-    manager: Manager | string;
 
-    @ManyToOne(() => Region, (region) => region.locations)
-    @JoinColumn({
-        name: 'regionId',
-    })
-    region: Region;
-
-    @OneToMany(() => Employee, (employee) => employee.location)
-    employees: Employee[];
+    @OneToMany(() => Customer, (customer) => customer.location)
+    customers: Customer[];
 }

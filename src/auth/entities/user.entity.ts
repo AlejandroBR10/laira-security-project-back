@@ -1,5 +1,4 @@
 import { Employee } from "src/employees/entities/employee.entity";
-import { Manager } from "src/managers/entities/manager.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
@@ -16,9 +15,6 @@ userPassword: string;
     default: "Employee"
 })
 userRoles: string[];
-
-@OneToOne(() => Manager)
-manager: Manager;
 
 @OneToOne(() => Employee)
 employee: Employee;

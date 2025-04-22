@@ -3,15 +3,14 @@ import {ConfigModule} from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { EmployeesModule } from './employees/employees.module';
-import { ProductsModule } from './products/products.module';
 import { ProvidersModule } from './providers/providers.module';
-import { ManagersModule } from './managers/managers.module';
-import { LocationsModule } from './locations/locations.module';
-import { RegionsModule } from './regions/regions.module';
+
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_KEY } from './auth/constants/jwt.constants';
 import { EXPIRES_IN } from './auth/constants/jwt.constants';
+import { CustomersModule } from './customers/customers.module';
+import { LocationsModule } from './locations/locations.module';
 
 
 @Module({
@@ -19,7 +18,7 @@ import { EXPIRES_IN } from './auth/constants/jwt.constants';
     TypeOrmModule.forRoot({
         type: 'postgres',
         host: process.env.host,
-        port: 5432,
+        port: 5433,
         username: 'postgres',
         password: "TheBestPassword",
         database: process.env.name,
@@ -28,7 +27,7 @@ import { EXPIRES_IN } from './auth/constants/jwt.constants';
         synchronize: true,
       }),
       ConfigModule.forRoot(),
-      EmployeesModule, ProductsModule, ProvidersModule, ManagersModule, LocationsModule, RegionsModule, AuthModule
+      EmployeesModule, ProvidersModule, AuthModule, CustomersModule, LocationsModule
     ],
   controllers: [],
   providers: [],

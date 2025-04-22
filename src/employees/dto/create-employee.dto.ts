@@ -2,7 +2,7 @@ import {  IsEmail, IsObject, IsOptional, IsString, IsUUID, MaxLength } from "cla
 import { Employee } from "../entities/employee.entity";
 import { User } from "src/auth/entities/user.entity";
 import { Type } from "class-transformer";
-import { Location } from "src/locations/entities/location.entity";
+
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class CreateEmployeeDto {
@@ -32,9 +32,6 @@ export class CreateEmployeeDto {
         @IsEmail()
         employeeEmail: string;
 
-        @ApiPropertyOptional()
-        @IsOptional()
-        @IsObject()
-        location : Location
+
 }
 

@@ -1,21 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from './entities/location.entity';
-import { Manager } from 'src/managers/entities/manager.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class LocationsService {
+
   constructor(
     @InjectRepository(Location)
-    private locationRepository : Repository<Location>,
-    @InjectRepository(Manager)
-    private managerRepository: Repository<Manager>
+    private locationRepository: Repository<Location>,
   ){}
-  create(createLocationDto: CreateLocationDto) {
-    return this.locationRepository.save(createLocationDto);
+  async create(createLocationDto: CreateLocationDto) {
+    const location = await this.locationRepository.save(createLocationDto);
+    return location;
   }
 
   findAll() {
@@ -23,48 +22,30 @@ export class LocationsService {
   }
 
   findOne(id: number) {
-    const location = this.locationRepository.findOneBy({
-      locationId : id
-    });
+    const location= this.locationRepository.findOneBy({locationId: id});
     if(!location){
-      throw new NotFoundException("Location not found");
+      throw new NotFoundException();
     }
     return location;
   }
 
-  async update(id: number, updateLocationDto: UpdateLocationDto) {
-    //set manager to null
-    
-    this.managerRepository.createQueryBuilder().update().set({ location:  null }).where(
-      "locationId = :id", {
-        id,
-      }
-    ).execute();
-    const locationToUpdate = await this.locationRepository.preload({
-      locationId: id,
-      ...updateLocationDto
-    });
-    if(!locationToUpdate) throw new NotFoundException();
-    
-    const saveLocation = await this.locationRepository.save(locationToUpdate);
+ async  update(id: number, updateLocationDto: UpdateLocationDto) {
+  const locationToUpdate = await this.locationRepository.preload({
+    locationId: id, 
+    ...updateLocationDto,
+  });
+  if(!locationToUpdate) throw new NotFoundException();
+  this.locationRepository.save(locationToUpdate);
 
-    const updatedManager  = await this.managerRepository.preload({
-      managerId : updateLocationDto.manager,
-      location : locationToUpdate,
-    })
-    if(!updatedManager) throw new NotFoundException("Manager no encontrado");
-    this.managerRepository.save(updatedManager);
-    
-    return saveLocation;
+  return locationToUpdate;
   }
- 
+
   remove(id: number) {
+   
     this.findOne(id);
-    const location = this.locationRepository.delete({
-      locationId : id
-    });
+    const location  = this.locationRepository.delete({locationId: id});
     return {
-    message: `Objeto con el id:${id} eliminado correctamente`,
+      message : `Ubicacion con el id:${id} eliminada correctamente`,
+    }
   }
-}
 }
