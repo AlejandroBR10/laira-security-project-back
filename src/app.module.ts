@@ -11,6 +11,7 @@ import { JWT_KEY } from './auth/constants/jwt.constants';
 import { EXPIRES_IN } from './auth/constants/jwt.constants';
 import { CustomersModule } from './customers/customers.module';
 import { LocationsModule } from './locations/locations.module';
+import { ProductsModule } from './products/products.module';
 
 
 @Module({
@@ -27,7 +28,7 @@ import { LocationsModule } from './locations/locations.module';
         synchronize: true,
       }),
       ConfigModule.forRoot(),
-      EmployeesModule, ProvidersModule, AuthModule, CustomersModule, LocationsModule
+      EmployeesModule, ProvidersModule, AuthModule, CustomersModule, LocationsModule, ProductsModule
     ],
   controllers: [],
   providers: [],

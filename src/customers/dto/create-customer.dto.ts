@@ -2,6 +2,7 @@ import {  IsEmail, IsObject, IsOptional, IsString, IsUUID, MaxLength } from "cla
 
 import { Location } from "src/locations/entities/location.entity";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { User } from "src/auth/entities/user.entity";
 
 export class CreateCustomerDto {
 
@@ -34,5 +35,5 @@ export class CreateCustomerDto {
            @ApiPropertyOptional()
            @IsOptional()
            @IsObject()
-           location : Location
+           user : User;
 }

@@ -17,7 +17,7 @@ import { Customer } from './entities/customer.entity';
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
-   @Auth(ROLES.MANAGER)
+   @Auth(ROLES.ADMIN)
     @ApiResponse({
       status: 201,
       example: {
@@ -33,7 +33,7 @@ export class CustomersController {
     return this.customersService.create(createCustomerDto);
   }
 
-  @Auth(ROLES.MANAGER)
+  @Auth()
 @ApiResponse({
   status: 201,
   example: {

@@ -1,3 +1,4 @@
+import { Customer } from "src/customers/entities/customer.entity";
 import { Employee } from "src/employees/entities/employee.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
@@ -16,7 +17,7 @@ userPassword: string;
 })
 userRoles: string[];
 
-@OneToOne(() => Employee)
-employee: Employee;
+@OneToOne(() => Customer)
+customer: Customer;
 
 }

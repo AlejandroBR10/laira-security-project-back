@@ -23,6 +23,6 @@ export class Location {
     locationLatLng : number[];
 
 
-    @OneToMany(() => Customer, (customer) => customer.location)
-    customers: Customer[];
+   /* @OneToMany(() => Customer, (customer) => customer.location)
+    customers: Customer[];*/
 }
